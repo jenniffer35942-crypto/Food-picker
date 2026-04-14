@@ -1,0 +1,60 @@
+let foods = [
+  "螺絲粉（不要辣）",
+  "麥當勞（不要太常吃但麥旋風要吃）",
+  "啃樂叔（沒吃過的不知道好不好吃）",
+  "塔斯丁（還好但轉到就加減吃好嗎）",
+
+  "牛肉麵（別捨不得吃你的同伴）",
+  "餛飩麵",
+
+  "水餃＋酸辣湯",
+  "鍋貼＋肉夾饃＋紫菜蛋花湯",
+  "涼皮（怕你太冰涼涼）",
+  "炒飯＋牛肉丸湯",
+
+  "番茄雞蛋麵",
+  "自己煮",
+  "肯德基",
+
+  "小籠包＋豆漿",
+  "蟹黃拌麵",
+  "蒸餃",
+  "出去吃火鍋",
+  "壽司＋味噌湯",
+  "牛丼飯",
+  "嘎嘎香肉醬麵"
+];
+
+const originalFoods = [...foods];
+
+function play() {
+  const result = document.getElementById("result");
+
+  if (foods.length === 0) {
+    foods = [...originalFoods];
+  }
+
+  let ballIndex = 0;
+  let rounds = 0;
+
+  result.innerText = "🎱 球正在亂跑中...";
+
+  const interval = setInterval(() => {
+    const current = foods[ballIndex];
+    result.innerText = "🎱 " + current;
+
+    ballIndex = (ballIndex + 1) % foods.length;
+    rounds++;
+
+    // 跑久一點再停
+    if (rounds > 20) {
+      clearInterval(interval);
+
+      const final = foods[Math.floor(Math.random() * foods.length)];
+      result.innerText = "🎉 抽中：" + final;
+
+      // 移除避免重複
+      foods = foods.filter(f => f !== final);
+    }
+  }, 120);
+}
