@@ -3,80 +3,48 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>抽獎球機 🎱</title>
+<title>今天吃什麼 🍽️</title>
 
 <style>
 body {
   margin: 0;
+  font-family: Arial;
+  text-align: center;
+  background: linear-gradient(135deg, #fff5f7, #ffe3e8);
   height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(135deg, #fff5f7, #ffe3e8);
-  font-family: Arial;
-}
-
-/* 圓形機器 */
-.machine {
-  width: 280px;
-  height: 280px;
-  border-radius: 50%;
-  border: 6px solid #ff4d6d;
-  position: relative;
-  overflow: hidden;
-  background: white;
-}
-
-/* 球 */
-.ball {
-  width: 60px;
-  height: 60px;
-  background: #ff758f;
-  border-radius: 50%;
-  position: absolute;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: white;
-  font-size: 12px;
-  text-align: center;
-  padding: 5px;
-  transition: 0.2s;
 }
 
 button {
-  margin-top: 20px;
-  padding: 12px 20px;
+  padding: 14px 24px;
   font-size: 18px;
-  border-radius: 10px;
   border: none;
+  border-radius: 12px;
   background: #ff758f;
   color: white;
 }
 
 #result {
   margin-top: 20px;
-  font-size: 20px;
+  font-size: 22px;
 }
 </style>
 </head>
 
 <body>
 
-<h1>🎱 抽抽樂機</h1>
+<h1>今天吃什麼 🍽️</h1>
 
-<div class="machine">
-  <div class="ball" id="ball">開始</div>
-</div>
+<button onclick="pick()">幫你選一個</button>
 
-<button onclick="play()">開始抽</button>
-
-<h2 id="result"></h2>
+<h2 id="result">點我抽選</h2>
 
 <script>
-let foods = [
-    "螺絲粉（不要辣）",
+const foods = [
+  "螺絲粉（不要辣）",
   "麥當勞（不要太常吃但麥旋風要吃）",
   "啃樂叔（沒吃過的不知道好不好吃）",
   "塔斯丁（還好但轉到就加減吃好嗎）",
@@ -106,34 +74,9 @@ let foods = [
   "嘎嘎香肉醬麵（看起來很好吃但感覺很鹹 一定愛配溫開水）"
 ];
 
-function play() {
-  const ball = document.getElementById("ball");
-  const result = document.getElementById("result");
-
-  let rounds = 0;
-
-  const interval = setInterval(() => {
-    // 隨機位置（讓球亂跑）
-    const x = Math.random() * 200;
-    const y = Math.random() * 200;
-
-    ball.style.left = x + "px";
-    ball.style.top = y + "px";
-
-    // 隨機食物顯示在球上
-    const random = foods[Math.floor(Math.random() * foods.length)];
-    ball.innerText = random;
-
-    rounds++;
-
-    if (rounds > 30) {
-      clearInterval(interval);
-
-      const final = foods[Math.floor(Math.random() * foods.length)];
-      ball.innerText = final;
-      result.innerText = "🎉 今天吃：" + final;
-    }
-  }, 100);
+function pick() {
+  const i = Math.floor(Math.random() * foods.length);
+  document.getElementById("result").innerText = foods[i];
 }
 </script>
 
