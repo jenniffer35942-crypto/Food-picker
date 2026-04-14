@@ -2,34 +2,47 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>今天吃什麼 🍽️</title>
 
 <style>
 body {
-  margin: 0;
   font-family: Arial;
   text-align: center;
   background: linear-gradient(135deg, #fff5f7, #ffe3e8);
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  padding-top: 60px;
+}
+
+h1 {
+  color: #ff4d6d;
+  font-size: 34px;
+}
+
+p {
+  color: #666;
+  margin-bottom: 20px;
 }
 
 button {
-  padding: 14px 24px;
+  padding: 14px 26px;
   font-size: 18px;
   border: none;
-  border-radius: 12px;
+  border-radius: 14px;
   background: #ff758f;
   color: white;
+  cursor: pointer;
+  transition: 0.2s;
 }
 
-#result {
-  margin-top: 20px;
-  font-size: 22px;
+button:hover {
+  background: #ff4d6d;
+  transform: scale(1.05);
+}
+
+h2 {
+  margin-top: 40px;
+  font-size: 28px;
+  color: #333;
+  min-height: 40px;
 }
 </style>
 </head>
@@ -37,13 +50,14 @@ button {
 <body>
 
 <h1>今天吃什麼 🍽️</h1>
+<p>選不出來就按一下</p>
 
 <button onclick="pick()">幫你選一個</button>
 
-<h2 id="result">點我抽選</h2>
+<h2 id="result">☝️☝️☝️☝️</h2>
 
 <script>
-const foods = [
+let foods = [
   "螺絲粉（不要辣）",
   "麥當勞（不要太常吃但麥旋風要吃）",
   "啃樂叔（沒吃過的不知道好不好吃）",
@@ -66,7 +80,7 @@ const foods = [
   "蟹黃拌麵（老上海餛飩舖裡面有）",
 
   "蒸餃",
-  "出去吃火鍋",
+  "出去吃火鍋嗎 好懶哦 不要好了",
   "壽司＋味噌湯（因為你變成獵豹就喝不到了 趁你現在是牛趕快喝）",
 
   "牛丼飯（但要外送50分鐘哭哭 很餓請跳下一個）",
@@ -74,9 +88,30 @@ const foods = [
   "嘎嘎香肉醬麵（看起來很好吃但感覺很鹹 一定愛配溫開水）"
 ];
 
+const originalFoods = [...foods];
+
 function pick() {
-  const i = Math.floor(Math.random() * foods.length);
-  document.getElementById("result").innerText = foods[i];
+  const result = document.getElementById("result");
+
+  if (foods.length === 0) {
+    result.innerText = "全部吃完一輪了 🔁 重置中...";
+    setTimeout(() => {
+      foods = [...originalFoods];
+      result.innerText = "已重置，可以再開始 🍽️";
+    }, 1000);
+    return;
+  }
+
+  result.innerText = "選擇中...";
+
+  setTimeout(() => {
+    const i = Math.floor(Math.random() * foods.length);
+    const chosen = foods[i];
+
+    foods.splice(i, 1);
+
+    result.innerText = chosen;
+  }, 500);
 }
 </script>
 
