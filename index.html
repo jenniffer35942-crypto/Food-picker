@@ -2,6 +2,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>今天吃什麼 🍽️</title>
 
 <style>
@@ -19,46 +20,53 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+
+  /* 防止手機縮放字體 */
+  -webkit-text-size-adjust: 100%;
 }
 
-/* 卡片容器 */
+/* 🔥 手機滿版核心 */
 .card {
-  width: min(420px, 90vw);
-  padding: 40px 30px;
-  border-radius: 24px;
+  width: 94vw;
+  height: 92vh;
 
-  background: rgba(255, 255, 255, 0.65);
-  backdrop-filter: blur(12px);
+  border-radius: 28px;
 
-  box-shadow: 0 20px 60px rgba(255, 77, 109, 0.15);
-  text-align: center;
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(16px);
 
-  animation: fadeIn 0.6s ease;
+  box-shadow: 0 20px 60px rgba(255, 77, 109, 0.18);
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  padding: 20px;
+  box-sizing: border-box;
 }
 
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
+/* 🔥 標題更大（手機友善） */
 h1 {
   margin: 0;
-  font-size: 32px;
+  font-size: clamp(32px, 7vw, 44px);
   color: #ff3d68;
   font-weight: 700;
+  text-align: center;
 }
 
 p {
   color: #777;
-  margin-top: 8px;
+  margin-top: 10px;
   margin-bottom: 25px;
+  font-size: clamp(14px, 4vw, 16px);
 }
 
-/* 按鈕 */
+/* 🔥 按鈕更大更好點 */
 button {
-  padding: 14px 28px;
-  font-size: 16px;
-  font-weight: 600;
+  padding: 16px 30px;
+  font-size: clamp(16px, 4.5vw, 20px);
+  font-weight: 700;
 
   border: none;
   border-radius: 999px;
@@ -67,36 +75,35 @@ button {
   color: white;
 
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: 0.2s ease;
 
-  box-shadow: 0 10px 20px rgba(255, 61, 104, 0.25);
+  box-shadow: 0 12px 25px rgba(255, 61, 104, 0.25);
 }
 
-button:hover {
-  transform: translateY(-2px) scale(1.03);
-  box-shadow: 0 15px 30px rgba(255, 61, 104, 0.3);
-}
-
-button:active {
-  transform: scale(0.98);
-}
-
-/* 結果區 */
+/* 🔥 結果超大重點 */
 h2 {
-  margin-top: 30px;
-  font-size: 22px;
+  margin-top: 35px;
+  font-size: clamp(26px, 7vw, 40px);
   color: #333;
-  min-height: 50px;
+
+  min-height: 120px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  text-align: center;
   line-height: 1.4;
-  word-break: break-word;
-  transition: 0.3s ease;
+
+  padding: 0 10px;
 }
 
-/* 小提示 */
+/* 小字提示 */
 .hint {
   font-size: 12px;
   color: #aaa;
   margin-top: 10px;
+  text-align: center;
 }
 </style>
 </head>
@@ -110,7 +117,7 @@ h2 {
   <button onclick="pick()">幫你選一個</button>
 
   <h2 id="result">👆🏻👆🏻👆🏻👆🏻👆🏻👆🏻</h2>
-  <div class="hint"></div>
+  <div class="hint">吃完會自動重置 🔁</div>
 </div>
 
 <script>
@@ -130,7 +137,7 @@ let foods = [
 
   "番茄雞蛋麵",
   "義大利麵＋蘑菇濃湯",
-  "自己煮",
+  "學我自己煮一些健康又沒味道的東西",
   "肯德基",
 
   "小籠包＋豆漿（老上海餛飩舖看起來有點好吃）",
@@ -151,23 +158,21 @@ function pick() {
   const result = document.getElementById("result");
 
   if (foods.length === 0) {
-    result.innerText = "已經吃完一輪 🔁 重置中...";
+    result.innerText = "重置中...";
     setTimeout(() => {
       foods = [...originalFoods];
-      result.innerText = "重置完成，可以再選一次 🍽️";
-    }, 900);
+      result.innerText = "重新開始 🍽️";
+    }, 800);
     return;
   }
 
-  result.innerText = "思考中... 🤔";
+  result.innerText = "選擇中 🤔";
 
   setTimeout(() => {
     const i = Math.floor(Math.random() * foods.length);
-    const chosen = foods[i];
-
+    result.innerText = foods[i];
     foods.splice(i, 1);
-    result.innerText = chosen;
-  }, 600);
+  }, 500);
 }
 </script>
 
