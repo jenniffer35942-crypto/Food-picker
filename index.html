@@ -1,3 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>抽獎球 🍽️</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: Arial;
+  text-align: center;
+  background: linear-gradient(135deg, #fff5f7, #ffe3e8);
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+button {
+  padding: 12px 20px;
+  font-size: 18px;
+  border-radius: 10px;
+  border: none;
+  background: #ff758f;
+  color: white;
+}
+
+#result {
+  margin-top: 20px;
+  font-size: 22px;
+}
+</style>
+</head>
+
+<body>
+
+<h1>🎱 今天吃什麼</h1>
+
+<button onclick="play()">開始抽獎</button>
+
+<h2 id="result">準備中...</h2>
+
+<script>
 let foods = [
   "螺絲粉（不要辣）",
   "麥當勞（不要太常吃但麥旋風要吃）",
@@ -46,15 +91,17 @@ function play() {
     ballIndex = (ballIndex + 1) % foods.length;
     rounds++;
 
-    // 跑久一點再停
     if (rounds > 20) {
       clearInterval(interval);
 
       const final = foods[Math.floor(Math.random() * foods.length)];
       result.innerText = "🎉 抽中：" + final;
 
-      // 移除避免重複
       foods = foods.filter(f => f !== final);
     }
   }, 120);
 }
+</script>
+
+</body>
+</html>
