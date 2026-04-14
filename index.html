@@ -5,63 +5,120 @@
 <title>今天吃什麼 🍽️</title>
 
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
 body {
-  font-family: Arial;
+  font-family: "Inter", Arial;
+  background: linear-gradient(135deg, #fff1f4, #ffe3e8);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* 卡片容器 */
+.card {
+  width: min(420px, 90vw);
+  padding: 40px 30px;
+  border-radius: 24px;
+
+  background: rgba(255, 255, 255, 0.65);
+  backdrop-filter: blur(12px);
+
+  box-shadow: 0 20px 60px rgba(255, 77, 109, 0.15);
   text-align: center;
-  background: linear-gradient(135deg, #fff5f7, #ffe3e8);
-  padding-top: 60px;
+
+  animation: fadeIn 0.6s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 h1 {
-  color: #ff4d6d;
-  font-size: 34px;
+  margin: 0;
+  font-size: 32px;
+  color: #ff3d68;
+  font-weight: 700;
 }
 
 p {
-  color: #666;
-  margin-bottom: 20px;
+  color: #777;
+  margin-top: 8px;
+  margin-bottom: 25px;
 }
 
+/* 按鈕 */
 button {
-  padding: 14px 26px;
-  font-size: 18px;
+  padding: 14px 28px;
+  font-size: 16px;
+  font-weight: 600;
+
   border: none;
-  border-radius: 14px;
-  background: #ff758f;
+  border-radius: 999px;
+
+  background: linear-gradient(135deg, #ff6b8b, #ff3d68);
   color: white;
+
   cursor: pointer;
-  transition: 0.2s;
+  transition: all 0.2s ease;
+
+  box-shadow: 0 10px 20px rgba(255, 61, 104, 0.25);
 }
 
 button:hover {
-  background: #ff4d6d;
-  transform: scale(1.05);
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 15px 30px rgba(255, 61, 104, 0.3);
 }
 
+button:active {
+  transform: scale(0.98);
+}
+
+/* 結果區 */
 h2 {
-  margin-top: 40px;
-  font-size: 28px;
+  margin-top: 30px;
+  font-size: 22px;
   color: #333;
-  min-height: 40px;
+  min-height: 50px;
+  line-height: 1.4;
+  word-break: break-word;
+  transition: 0.3s ease;
+}
+
+/* 小提示 */
+.hint {
+  font-size: 12px;
+  color: #aaa;
+  margin-top: 10px;
 }
 </style>
 </head>
 
 <body>
 
-<h1>今天吃什麼 🍽️</h1>
-<p>選不出來就按一下</p>
+<div class="card">
+  <h1>今天吃什麼 🍽️</h1>
+  <p>選不出來就交給命運</p>
 
-<button onclick="pick()">幫你選一個</button>
+  <button onclick="pick()">幫你選一個</button>
 
-<h2 id="result">☝️☝️☝️☝️</h2>
+  <h2 id="result">點一下開始 👉</h2>
+  <div class="hint">每次都不重複，吃完會自動重置 🔁</div>
+</div>
 
 <script>
 let foods = [
-  "螺絲粉（我想吃 幫我吃）",
+    "螺絲粉（不要辣）",
   "麥當勞（不要太常吃但麥旋風要吃）",
   "啃樂叔（沒吃過的不知道好不好吃）",
-  "塔斯丁（還好 但轉到就加減吃好嗎）",
+  "塔斯丁（還好但轉到就加減吃好嗎）",
 
   "牛肉麵（別捨不得吃你的同伴）",
   "餛飩麵",
@@ -80,7 +137,7 @@ let foods = [
   "蟹黃拌麵（老上海餛飩舖裡面有）",
 
   "蒸餃",
-  "出去吃火鍋嗎 好懶哦 不要好了",
+  "出去吃火鍋",
   "壽司＋味噌湯（因為你變成獵豹就喝不到了 趁你現在是牛趕快喝）",
 
   "牛丼飯（但要外送50分鐘哭哭 很餓請跳下一個）",
@@ -94,24 +151,23 @@ function pick() {
   const result = document.getElementById("result");
 
   if (foods.length === 0) {
-    result.innerText = "全部吃完一輪了 🔁 重置中...";
+    result.innerText = "已經吃完一輪 🔁 重置中...";
     setTimeout(() => {
       foods = [...originalFoods];
-      result.innerText = "已重置，可以再開始 🍽️";
-    }, 1000);
+      result.innerText = "重置完成，可以再選一次 🍽️";
+    }, 900);
     return;
   }
 
-  result.innerText = "選擇中...";
+  result.innerText = "思考中... 🤔";
 
   setTimeout(() => {
     const i = Math.floor(Math.random() * foods.length);
     const chosen = foods[i];
 
     foods.splice(i, 1);
-
     result.innerText = chosen;
-  }, 500);
+  }, 600);
 }
 </script>
 
